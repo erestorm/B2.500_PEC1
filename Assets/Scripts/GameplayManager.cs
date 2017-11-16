@@ -10,7 +10,8 @@ public class GameplayManager : MonoBehaviour {
     public float dialogueDelayInSecs = 2;
     public Button optionButtonPrefab;
     public InsultEngine insultEngine;
-    public UIEngine uiEngine;
+    public AiEngine aiEngine;
+    public UiEngine uiEngine;
     public SceneNavigator sceneNavigator;
     private Player avatar = new Player();
     private Player enemy = new Player();
@@ -28,6 +29,8 @@ public class GameplayManager : MonoBehaviour {
         EnemyInsults();
     }
 
+    /// <summary>
+    /// Ejecuta una acción pasado unos determinados segundos.</summary>
     void Wait(float seconds, Action action) {
         StartCoroutine(WaitCoroutine(seconds, action));
     }
@@ -37,16 +40,20 @@ public class GameplayManager : MonoBehaviour {
         action();
     }
 
+    /// <summary>
+    /// Acción del enemigo usando un insulto.</summary>
     void EnemyInsults() {
-        enemy.insult = insultEngine.GetRandomInsult();
+        enemy.insult = aiEngine.GetEnemyInsult();
         uiEngine.SetEnemyDialogue(enemy.insult);
         uiEngine.SetAvatarDialogue("");
 
-        Wait(dialogueDelayInSecs, () => { AvatarPreparesToDefend(); });
+        AvatarPreparesToDefend();
     }
 
+    /// <summary>
+    /// Acción del enemigo usando una defensa.</summary>
     void EnemyDefends() {
-        enemy.defense = insultEngine.GetRandomDefense();
+        enemy.defense = aiEngine.GetEnemyDefense(avatar.insult);
         uiEngine.SetEnemyDialogue(enemy.defense);
 
         uiEngine.PlayFightSoundFx();
@@ -70,6 +77,8 @@ public class GameplayManager : MonoBehaviour {
         });
     }
 
+    /// <summary>
+    /// Acción del avatar buscando un insulto.</summary>
     void AvatarPreparesToInsult() {
         Button[] insultButtons = new Button[insultEngine.GetInsults().Length];
         int i = 0;
@@ -86,6 +95,9 @@ public class GameplayManager : MonoBehaviour {
         uiEngine.SetDialogueOptions(insultButtons);
     }
 
+    /// <summary>
+    /// Acción del avatar usando un determinado insulto.</summary>
+    /// <param name="insult">Texto de insulto.</param>
     void AvatarInsults(string insult) {
         avatar.insult = insult;
         uiEngine.SetAvatarDialogue(avatar.insult);
@@ -94,6 +106,8 @@ public class GameplayManager : MonoBehaviour {
         Wait(dialogueDelayInSecs, () => { EnemyDefends(); });
     }
 
+    /// <summary>
+    /// Acción del avatar buscando una defensa.</summary>
     void AvatarPreparesToDefend() {
         Button[] defenseButtons = new Button[insultEngine.GetDefenses().Length];
         int i = 0;
@@ -110,6 +124,9 @@ public class GameplayManager : MonoBehaviour {
         uiEngine.SetDialogueOptions(defenseButtons);
     }
 
+    /// <summary>
+    /// Acción del avatar usando una determinada defensa.</summary>
+    /// <param name="defense">Texto de defensa.</param>
     void AvatarDefends(string defense) {
         avatar.defense = defense;
         uiEngine.SetAvatarDialogue(avatar.defense);
@@ -135,10 +152,14 @@ public class GameplayManager : MonoBehaviour {
         });
     }
 
+    /// <summary>
+    /// Comprueba si la lucha ha llegado a su fin.</summary>
     bool FightIsOver() {
         return avatar.wins == roundsToWin || enemy.wins == roundsToWin;
     }
 
+    /// <summary>
+    /// Determina quién ha ganado el juego y va a la escena de resultado.</summary>
     void GameOver() {
         if(avatar.wins > enemy.wins) {
             avatarWon = true;

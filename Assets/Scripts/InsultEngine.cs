@@ -22,6 +22,8 @@ public class InsultEngine : MonoBehaviour {
         LoadInsults();
     }
 
+    /// <summary>
+    /// Carga insultos de un fichero.</summary>
     private void LoadInsults() {
         string filePath = Path.Combine(Application.streamingAssetsPath, "insults.json");
 
@@ -40,22 +42,8 @@ public class InsultEngine : MonoBehaviour {
     }
 
     /// <summary>
-    /// Gets a random insult.</summary>
-    /// <returns>A random insult string.</returns>
-    public string GetRandomInsult() {
-        return GetInsults()[Random.Range(0, insultsDict.Count - 1)];
-    }
-
-    /// <summary>
-    /// Gets a random defense.</summary>
-    /// <returns>A random defense string.</returns>
-    public string GetRandomDefense() {
-        return GetDefenses()[Random.Range(0, insultsDict.Count - 1)];
-    }
-
-    /// <summary>
-    /// Gets available defenses.</summary>
-    /// <returns>Array of defense strings.</returns>
+    /// Devuelve las defensas disponibles.</summary>
+    /// <returns>Defensas disponibles.</returns>
     public string[] GetDefenses() {
         string[] defenses = new string[insultsDict.Count + 3];
         int i = 0;
@@ -72,8 +60,8 @@ public class InsultEngine : MonoBehaviour {
     }
 
     /// <summary>
-    /// Gets available insults.</summary>
-    /// <returns>Array of insult strings.</returns>
+    /// Devuelve los insultos disponibles.</summary>
+    /// <returns>Insultos disponibles.</returns>
     public string[] GetInsults() {
         string[] insults = new string[insultsDict.Count];
         int i = 0;
@@ -86,11 +74,24 @@ public class InsultEngine : MonoBehaviour {
     }
 
     /// <summary>
-    /// Checks if defense matches the insult.</summary>
-    /// <param name="insult"> Insult string.</param>
-    /// <param name="defense"> Defense string.</param>
-    /// <returns><code>false</code> if insult does not exist or defense does not match insult.
-    /// <code>true</code> otherwise.</returns>
+    /// Devuelve la defensa apropiada para un determinado insulto.</summary>
+    /// <param name="insult">Insulto.</param>
+    /// <returns>Defensa. Si el insulto no existe, devuelve un string vacío.</returns>
+    public string GetDefenseFor(string insult) {
+        string defenseFound;
+        if (insultsDict.TryGetValue(insult, out defenseFound)) {
+            return defenseFound;
+        } else {
+            return "";
+        }
+    }
+
+    /// <summary>
+    /// Comprueba si una defensa determinada es apropiada para un insulto dado.</summary>
+    /// <param name="insult">Insulto.</param>
+    /// <param name="defense">Defensa.</param>
+    /// <returns><code>false</code> si el insulto no existe o la defensa no es la apropiada.
+    /// <code>true</code> por el contrario.</returns>
     public bool Matches(string insult, string defense) {
         string defenseFound;
         return insultsDict.TryGetValue(insult, out defenseFound) &&  defense == defenseFound;

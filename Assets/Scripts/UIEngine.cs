@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class UIEngine : MonoBehaviour {
+public class UiEngine : MonoBehaviour {
 
     public Text avatarDialogue;
     public Text enemyDialogue;
@@ -23,12 +23,17 @@ public class UIEngine : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Resetea la UI.</summary>
     public void ResetUI() {
         SetAvatarDialogue("");
         SetEnemyDialogue("");
         SetDialogueOptions(new Button[0]);
     }
 
+    /// <summary>
+    /// Muestra nuevos botones de diálogo.</summary>
+    /// <param name="options">Los botones de diálogo.</param>
     public void SetDialogueOptions(Button[] options) {
         // Destruye botones previos
         foreach (Transform optionChild in optionsParent) {
@@ -44,22 +49,32 @@ public class UIEngine : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Muestra el texto de diálogo del avatar.</summary>
     public void SetAvatarDialogue(string text) {
         avatarDialogue.text = text;
     }
 
+    /// <summary>
+    /// Muestra el texto de diálogo del enemigo.</summary>
     public void SetEnemyDialogue(string text) {
         enemyDialogue.text = text;
     }
 
+    /// <summary>
+    /// Reproduce el efecto de sonido de lucha.</summary>
     public void PlayFightSoundFx() {
         fightSoundFx.Play();
     }
 
+    /// <summary>
+    /// Detiene el efecto de sonido de lucha.</summary>
     public void StopFightSoundFx() {
         fightSoundFx.Stop();
     }
 
+    /// <summary>
+    /// Deshabilita las opciones de diálogo.</summary>
     public void DisableDialogueOptions() {
         foreach (Transform optionChild in optionsParent) {
             optionChild.GetComponent<Button>().interactable = false;
