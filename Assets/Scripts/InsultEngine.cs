@@ -22,26 +22,6 @@ public class InsultEngine : MonoBehaviour {
         LoadInsults();
     }
 
-    private void InitInsults() {
-        // TODO: Leer de fichero JSON o XML
-        insultsDict.Add("Mi lengua es más hábil que cualquier espada.", "Primero deberías dejar de usarla como un plumero.");
-        insultsDict.Add("¡Ordeñaré hasta la última gota de sangre de tu cuerpo!", "Qué apropiado, tú peleas como una vaca.");
-        insultsDict.Add("Ya no hay técnicas que te puedan salvar.", "Sí que las hay, sólo que nunca las has aprendido.");
-        insultsDict.Add("Ahora entiendo lo que significan basura y estupidez.", "Me alegra que asistieras a tu reunión familiar diaria.");
-        insultsDict.Add("¡Eres como un dolor en la parte baja de la espalda!", "Ya te están fastidiando otra vez las almorranas, ¿Eh?");
-        insultsDict.Add("Mi nombre es temido en cada sucio rincón de esta isla.", "Ah, ¿Ya has obtenido ese trabajo de barrendero?");
-        insultsDict.Add("Hoy te tengo preparada una larga y dura lección.", "Y yo tengo un SALUDO para ti, ¿Te enteras?");
-        insultsDict.Add("Espero que tengas un barco para una rápida huida.", "¿Por qué? ¿Acaso querías pedir uno prestado?");
-        insultsDict.Add("Sólo he conocido a uno tan cobarde como tú.", "Te habrá enseñado todo lo que sabes.");
-        insultsDict.Add("Nunca me verán luchar tan mal como tú lo haces.", "¿TAN rápido corres?");
-        insultsDict.Add("Si tu hermano es como tú, mejor casarse con un cerdo.", "Me haces pensar que alguien ya lo ha hecho.");
-        insultsDict.Add("Cada palabra que sale de tu boca es una estupidez.", "Quería asegurarme de que estuvieras a gusto conmigo.");
-        insultsDict.Add("Mi espada es famosa en todo el Caribe.", "Qué pena me da que nadie haya oído hablar de ti.");
-        insultsDict.Add("Mis enemigos más sabios corren al verme llegar .", "¿Incluso antes de que huelan tu aliento?");
-        insultsDict.Add("¡Tengo el coraje y la técnica de un maestro!", "Estaría acabado si la usases alguna vez.");
-        insultsDict.Add("¡En mi última pelea terminé con la manos llenas de sangre!", "Espero que ya hayas aprendido a no tocarte la nariz.");
-    }
-
     private void LoadInsults() {
         string filePath = Path.Combine(Application.streamingAssetsPath, "insults.json");
 
